@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBI-HOTATE.JP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BIZ+UDMincho&family=BIZ+UDPMincho&family=M+PLUS+1p&display=swap" rel="stylesheet">
+    <style>
+        .biz-udpmincho-regular {
+            font-family: "BIZ UDPMincho", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .m-plus-1p-regular {
+            font-family: "M PLUS 1p", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 50px 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto 50px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .logo {
+            width: 70%;
+            max-width: 350px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            margin: 0;
+        }
+        .section-title {
+            font-size: 22px;
+            text-align: left;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            display: inline-block;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            bottom: 0;
+            width: calc(100% + 20px);
+            height: 2px;
+            background-color: #81c784;
+        }
+        .simple-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ロゴ画像 -->
+        <img src="logo.svg" alt="Website Logo" class="logo">
+        <p class="biz-udpmincho-regular">えびほたてじぇ～ぴ～</p>
+    </div>
+    <div class="container m-plus-1p-regular">
+        <div class="section-title biz-udpmincho-regular">活動内容</div>
+        <p>申込：2025/05</p>
+    </div>
+        <div class="container m-plus-1p-regular">
+        <div class="section-title biz-udpmincho-regular">制作物一覧</div>
+        <ul class="simple-list">
+            <li>製作中</li>
+        </ul>
+    </div>
+</body>
+</html>
