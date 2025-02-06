@@ -50,15 +50,17 @@
             margin-bottom: 15px;
             display: inline-block;
             position: relative;
+            z-index: 1;
         }
         .section-title::after {
             content: '';
             position: absolute;
-            left: -10px;
-            bottom: 0;
-            width: calc(100% + 20px);
-            height: 2px;
-            background-color: #81c784;
+            left: -10%;
+            bottom: 0.15em;
+            width: 120%;
+            height: 0.8em;
+            background-color: rgba(176, 196, 222, 0.4); /* 背景色 */
+            z-index: -1;
         }
         .simple-list {
             list-style-type: none;
@@ -75,13 +77,13 @@
         <p class="biz-udpmincho-regular">えびほたてじぇ～ぴ～</p>
     </div>
     <div class="container m-plus-1p-regular">
-        <div class="section-title biz-udpmincho-regular">活動</div>
-        <p>-</p>
+        <div class="section-title biz-udpmincho-regular">参加予定</div>
+        <p>2025/05/04　SUPER COMIC CITY 32 -day2-</p>
     </div>
         <div class="container m-plus-1p-regular">
         <div class="section-title biz-udpmincho-regular">制作物</div>
         <ul class="simple-list">
-            <li>製作中</li>
+            <li>ちいさな一輪挿し</li>
         </ul>
     </div>
 </body>
