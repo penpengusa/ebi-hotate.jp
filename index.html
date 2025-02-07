@@ -18,12 +18,14 @@
             font-weight: 400;
             font-style: normal;
         }
-        html, body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        html {
+            overflow-y: scroll;
+            user-select: none;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: "M PLUS 2", serif;
+            font-weight: 400;
+            font-style: normal;
             background-color: #f8f9fa;
             color: #333;
             text-align: center;
@@ -55,6 +57,9 @@
             display: inline-block;
             position: relative;
             z-index: 1;
+            font-family: "BIZ UDPMincho", serif;
+            font-weight: 400;
+            font-style: normal;
         }
         .section-title::after {
             content: '';
@@ -83,6 +88,75 @@
             text-decoration: underline;
             text-decoration-color: rgba(176, 196, 222, 1);
             text-decoration-thickness: 2px;
+        }
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            margin-left: 1em;
+            text-underline-offset: 3px;
+            padding: 0 5px;
+        }
+        .toggle-item::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-color: rgba(176, 196, 222, 1) transparent transparent transparent;
+            border-width: 13.86px 8px 0px 8px;
+            margin-left: 0.3em;
+            margin-bottom: -4px;
+        }
+        .toggle-item::before {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            width: 60%;
+        }
+        .toggle-item::before {
+            height: 1px;
+            background-color: #ccc; /* 初期色 */
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .toggle-item:hover::before {
+            height: 2px;
+            background-color: rgba(176, 196, 222, 1); /* ホバー時の線色 */
+        }
+        .toggle-item::after {
+            transition: transform 0.2s ease-out;
+        }
+        .toggle-item.active::after {
+            transform: rotate(180deg);
+        }
+        .toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-in-out;
+        }
+        .toggle-item.active + .toggle-content {
+            max-height: 800px; /* 必要に応じて適切な高さに設定 */
+        }
+        .toggle-content img {
+            width: 50%;
+            display: block;
+            margin: 10px auto 10px 26%; /* 中央揃え */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); /* 影 */
+        }
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: rgba(176, 196, 222, 1);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
         }
         @media (max-width: 768px) {
             body {
@@ -115,19 +189,74 @@
         <img src="logo.svg" alt="Website Logo" class="logo">
         <p class="biz-udpmincho-regular">えびほたてじぇ～ぴ～</p>
     </div>
-    <div class="container m-plus-2">
-        <div class="section-title biz-udpmincho-regular">参加予定</div>
+    <div class="container">
+        <div class="section-title">参加予定</div>
         <p>2025/05/04　SUPER COMIC CITY 32 -day2-</p>
     </div>
-    <div class="container m-plus-2">
-        <div class="section-title biz-udpmincho-regular">制作物</div>
+    <div class="container">
+        <div class="section-title">制作物</div>
         <ul class="simple-list">
-            <li>ちいさな一輪挿し</li>
+            <li class="toggle-item" onclick="toggleContent(this)">
+                ちいさな一輪挿し
+            </li>
+            <div class="toggle-content">
+                <img src="flower.jpg" alt="画像">
+            </div>
         </ul>
     </div>
-    <div class="container m-plus-2">
-        <div class="section-title biz-udpmincho-regular">連絡先</div>
-        <a href="https://twitter.com/ebihotatejp">@ebihotatejp</a>
+    <div class="container">
+        <div class="section-title">連絡先</div>
+        <a href="https://twitter.com/ebihotatejp" target="_blank" rel="noopener noreferrer">@ebihotatejp</a>
     </div>
+    <script>
+        function toggleContent(element) {
+            let content = element.nextElementSibling;
+            element.classList.toggle("active");
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null; // 閉じる
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px"; // 開く
+            }
+        }
+
+        document.addEventListener("click", function(event) {
+            createParticles(event.pageX, event.pageY);
+        });
+
+        function createParticles(x, y) {
+            const particleCount = 10; // 粒の数
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                document.body.appendChild(particle);
+
+                // 粒のサイズをランダムに (2px～8px)
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // ランダムな移動方向
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 60 + 10; // 10px～70px の距離
+                const targetX = x + Math.cos(angle) * distance;
+                const targetY = y + Math.sin(angle) * distance;
+
+                // 粒の初期位置を設定
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                setTimeout(() => {
+                    particle.style.transform = `translate(${targetX - x}px, ${targetY - y}px)`;
+                    particle.style.opacity = "0";
+                }, 10);
+
+                // 600ms後に削除
+                setTimeout(() => {
+                    particle.remove();
+                }, 600);
+            }
+        }
+    </script>
 </body>
 </html>
