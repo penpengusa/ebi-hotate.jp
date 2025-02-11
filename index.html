@@ -431,7 +431,7 @@
 
     function updateAnchorPosition() {
       tasselAnchorX = window.innerWidth * 0.8;
-      tasselAnchorY = window.innerHeight * 0.13;
+      tasselAnchorY = window.innerWidth > 1400 ? window.innerHeight * 0.13 : window.innerHeight * 0.05;
     }
 
     function updateTasselsAndRibbons() {
