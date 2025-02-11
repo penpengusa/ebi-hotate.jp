@@ -1,262 +1,527 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EBI-HOTATE.JP</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=BIZ+UDMincho&family=BIZ+UDPMincho&family=M+PLUS+1p&family=M+PLUS+2:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        .biz-udpmincho-regular {
-            font-family: "BIZ UDPMincho", serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-        .m-plus-2 {
-            font-family: "M PLUS 2", serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-        html {
-            overflow-y: scroll;
-            user-select: none;
-        }
-        body {
-            font-family: "M PLUS 2", serif;
-            font-weight: 400;
-            font-style: normal;
-            background-color: #f8f9fa;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-            margin: 50px 0;
-        }
-        .container {
-            max-width: 700px;
-            margin: 0 auto 50px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .logo {
-            width: 70%;
-            max-width: 350px;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 18px;
-            margin: 0;
-        }
-        .section-title {
-            font-size: 22px;
-            text-align: left;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            font-family: "BIZ UDPMincho", serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: -10%;
-            bottom: 0.15em;
-            width: 120%;
-            height: 0.8em;
-            background-color: rgba(176, 196, 222, 0.4); /* 背景色 */
-            z-index: -1;
-        }
-        .simple-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            font-size: 18px;
-        }
-        a {
-            font-size: 18px;
-            color: inherit;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 10px;
-        }
-        a:hover {
-            text-decoration: underline;
-            text-decoration-color: rgba(176, 196, 222, 1);
-            text-decoration-thickness: 2px;
-        }
-        .toggle-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            padding: 10px;
-            text-align: center;
-            position: relative;
-            margin-left: 1em;
-            text-underline-offset: 3px;
-            padding: 0 5px;
-        }
-        .toggle-item::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-color: rgba(176, 196, 222, 1) transparent transparent transparent;
-            border-width: 13.86px 8px 0px 8px;
-            margin-left: 0.3em;
-            margin-bottom: -4px;
-        }
-        .toggle-item::before {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            width: 60%;
-        }
-        .toggle-item::before {
-            height: 1px;
-            background-color: #ccc; /* 初期色 */
-            transition: background-color 0.2s ease-in-out;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EBI-HOTATE.JP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=BIZ+UDMincho&family=BIZ+UDPMincho&family=M+PLUS+1p&family=M+PLUS+2:wght@100..900&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      /* 色系はそのまま */
+      --main-bg-color: #ECEFF1;  
+      --main-text-color: #333D48;
+      --text-shadow-color: rgba(51, 61, 72, 0.05);
 
-        .toggle-item:hover::before {
-            height: 2px;
-            background-color: rgba(176, 196, 222, 1); /* ホバー時の線色 */
-        }
-        .toggle-item::after {
-            transition: transform 0.2s ease-out;
-        }
-        .toggle-item.active::after {
-            transform: rotate(180deg);
-        }
-        .toggle-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-in-out;
-        }
-        .toggle-item.active + .toggle-content {
-            max-height: 800px; /* 必要に応じて適切な高さに設定 */
-        }
-        .toggle-content img {
-            width: 50%;
-            display: block;
-            margin: 10px auto 10px 26%; /* 中央揃え */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); /* 影 */
-        }
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: rgba(176, 196, 222, 1);
-            border-radius: 50%;
-            pointer-events: none;
-            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-        }
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-                margin: 20px 0;
-            }
-            .container {
-                width: 85%;
-                padding: 15px;
-                margin: 0 auto 25px;
-            }
-            .section-title {
-                font-size: 18px;
-                margin-bottom: 8px;
-            }
-            .section-title::after {
-                width: 105%;
-                left: -2%;
-                height: 0.7em;
-            }
-            p, a, .simple-list {
-                font-size: 16px;
-            }
+      --container-bg-color: rgba(255, 255, 255, 0.92);
+      --box-shadow-color: rgba(51, 61, 72, 0.1);
+
+      --section-title-after-bg: rgba(200, 210, 220, 0.3);
+
+      --toggle-item-color: #8899A5;
+      --toggle-item-hover: #667789;
+      --toggle-border-color: #CBD5DC;
+
+      --particle-bg-color: rgba(200, 210, 220, 1);
+
+      --accent-color: #c6b47b;
+      --rope-color: #c6b47b;     
+      --hood-secondary: #B7C7D5; 
+      --hood-primary: #D7DBDD;   
     }
-    </style>
+
+    html {
+      background-color: var(--main-bg-color);
+      color: var(--main-text-color);
+      text-shadow: 1px 1px 2px var(--text-shadow-color);
+      overflow-y: scroll;
+      user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "M PLUS 2", serif;
+      font-weight: 400;
+      margin: 50px 0;
+      text-align: center;
+      line-height: 1.6;
+      background-attachment: fixed;
+    }
+    a {
+      font-size: 18px;
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 10px;
+    }
+    a:hover {
+      text-decoration: underline;
+      text-decoration-color: var(--accent-color);
+      text-decoration-thickness: 2px;
+    }
+
+    /* 背景フード */
+    .hood-primary {
+      position: fixed;
+      width: 150vw;
+      height: 150vw;
+      top: -60vw;
+      left: 0;
+      z-index: -10;
+    }
+    .hood-primary::before {
+      content: "";
+      position: absolute;
+      top: -25vw;
+      left: 0;
+      width: 100vw;
+      height: 100vw;
+      background-color: var(--hood-secondary);
+    }
+    .hood-primary::after {
+      content: "";
+      position: absolute;
+      top: 69vw;
+      left: -10vw;
+      width: 200vw;
+      height: 200vw;
+      background-color: var(--main-bg-color);
+      border-radius: 50% 45% / 50% 53%;
+      animation: hood 20s infinite linear;
+    }
+    .hood-secondary {
+      position: fixed;
+      width: 250vw;
+      height: 250vw;
+      background-color: var(--hood-primary);
+      border-radius: 50% 45% / 50% 55%;
+      top: -230vw;
+      left: -100vw;
+      z-index: -5;
+      animation: hood 20s infinite linear;
+    }
+    @keyframes hood {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* タッセル背景 */
+    #tassel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -7;
+      pointer-events: none;
+    }
+    #ropeSVG {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .weight-container {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      transform-origin: top center;
+    }
+    .tassel {
+      width: 50px;
+      height: 70px;
+    }
+
+    /* 左右分割リボン (根元) */
+    #ribbonL, #ribbonR {
+      position: absolute;
+      transform-origin: top center;
+      pointer-events: none;
+      z-index: -7;
+    }
+
+    /* コンテナ */
+    .container {
+      max-width: 720px;
+      margin: 0 auto 50px;
+      background: var(--container-bg-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px var(--box-shadow-color);
+      position: relative;
+      z-index: 0;
+    }
+    .logo {
+      width: 70%;
+      max-width: 350px;
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+    p {
+      font-size: 18px;
+      margin: 0 0 1em 0;
+    }
+    .section-title {
+      font-size: 22px;
+      text-align: left;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      display: inline-block;
+      position: relative;
+      font-family: "BIZ UDPMincho", serif;
+      font-weight: 400;
+      z-index: 1;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      left: -10%;
+      bottom: 0.4em;
+      width: 120%;
+      height: 0.8em;
+      background-color: var(--section-title-after-bg);
+    }
+    .simple-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      font-size: 18px;
+    }
+
+    /* トグル要素 */
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+      margin-left: 1em;
+      padding: 10px 5px;
+      color: var(--main-text-color);
+      text-underline-offset: 3px;
+    }
+    .toggle-item::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-color: var(--toggle-item-color) transparent transparent transparent;
+      border-width: 13.86px 8px 0px 8px;
+      margin-left: 0.3em;
+      margin-bottom: -4px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .toggle-item::before {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      width: 60%;
+      height: 1px;
+      background-color: var(--toggle-item-color);
+    }
+    .toggle-item:hover::before {
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+    .toggle-item.active::after {
+      transform: rotate(180deg);
+    }
+    .toggle-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+      margin-top: 5px;
+    }
+    .toggle-item.active + .toggle-content {
+      max-height: 800px;
+    }
+    .toggle-content img {
+      width: 50%;
+      display: block;
+      margin: 10px auto 10px 26%;
+      border: 1px solid var(--toggle-border-color);
+      border-radius: 4px;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* パーティクル */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: var(--particle-bg-color);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    }
+
+    /* メディアクエリ */
+    @media (max-width: 768px) {
+      body {
+        margin: 20px 0;
+      }
+      .container {
+        width: 85%;
+        padding: 15px;
+        margin: 0 auto 25px;
+      }
+      .section-title {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .section-title::after {
+        width: 105%;
+        left: -2%;
+        height: 0.7em;
+      }
+      p, a, .simple-list {
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- ロゴ画像 -->
-        <img src="logo.svg" alt="Website Logo" class="logo">
-        <p class="biz-udpmincho-regular">えびほたてじぇ～ぴ～</p>
+  <!-- フード背景 -->
+  <div class="hood-secondary"></div>
+  <div class="hood-primary"></div>
+
+  <!-- タッセル + リボン(左右) -->
+  <div id="tassel">
+    <svg id="ropeSVG">
+      <path id="ropePath1" fill="none" stroke="var(--rope-color)" stroke-width="8"/>
+      <path id="ropePath2" fill="none" stroke="var(--rope-color)" stroke-width="8"/>
+    </svg>
+    <!-- 左右リボン -->
+    <img src="ribbonL.svg" id="ribbonL" alt="リボン左" width="100" height="166">
+    <img src="ribbonR.svg" id="ribbonR" alt="リボン右" width="99" height="183">
+
+    <!-- 左右タッセル -->
+    <div class="weight-container" id="weight1">
+      <!-- <img src="tassel.svg" class="tassel" alt="タッセル左"> -->
     </div>
-    <div class="container">
-        <div class="section-title">参加予定</div>
-        <p>2025/05/04　SUPER COMIC CITY 32 -day2-</p>
+    <div class="weight-container" id="weight2">
+      <!-- <img src="tassel.svg" class="tassel" alt="タッセル右"> -->
     </div>
-    <div class="container">
-        <div class="section-title">制作物</div>
-        <ul class="simple-list">
-            <li class="toggle-item" onclick="toggleContent(this)">
-                ちいさな一輪挿し
-            </li>
-            <div class="toggle-content">
-                <img src="flower.jpg" alt="画像">
-            </div>
-        </ul>
-    </div>
-    <div class="container">
-        <div class="section-title">連絡先</div>
-        <a href="https://twitter.com/ebihotatejp" target="_blank" rel="noopener noreferrer">@ebihotatejp</a>
-    </div>
-    <script>
-        function toggleContent(element) {
-            let content = element.nextElementSibling;
-            element.classList.toggle("active");
+  </div>
 
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null; // 閉じる
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px"; // 開く
-            }
-        }
+  <!-- メインコンテンツ -->
+  <div class="container">
+    <img src="logo.svg" alt="Website Logo" class="logo">
+    <p class="biz-udpmincho-regular">えびほたてじぇ～ぴ～</p>
+  </div>
+  <div class="container">
+    <div class="section-title">参加予定</div>
+    <p>2025/05/04　SUPER COMIC CITY 32 -day2-</p>
+  </div>
+  <div class="container">
+    <div class="section-title">制作物</div>
+    <ul class="simple-list">
+      <li class="toggle-item" onclick="toggleContent(this)">ちいさな一輪挿し</li>
+      <div class="toggle-content">
+        <img src="flower.jpg" alt="画像">
+      </div>
+    </ul>
+  </div>
+  <div class="container">
+    <div class="section-title">連絡先</div>
+    <a href="https://twitter.com/ebihotatejp" target="_blank" rel="noopener noreferrer">@ebihotatejp</a>
+  </div>
 
-        document.addEventListener("click", function(event) {
-            createParticles(event.pageX, event.pageY);
-        });
+  <!-- スクリプト -->
+  <script>
+    /***********************************************
+     * トグル
+     ***********************************************/
+    function toggleContent(element) {
+      const content = element.nextElementSibling;
+      element.classList.toggle("active");
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    }
 
-        function createParticles(x, y) {
-            const particleCount = 10; // 粒の数
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                document.body.appendChild(particle);
+    /***********************************************
+     * パーティクル
+     ***********************************************/
+    document.addEventListener("click", function(event) {
+      createParticles(event.pageX, event.pageY);
+    });
+    function createParticles(x, y) {
+      const particleCount = 10; 
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        document.body.appendChild(particle);
 
-                // 粒のサイズをランダムに (2px～8px)
-                const size = Math.random() * 6 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
+        const size = Math.random() * 6 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
 
-                // ランダムな移動方向
-                const angle = Math.random() * 2 * Math.PI;
-                const distance = Math.random() * 60 + 10; // 10px～70px の距離
-                const targetX = x + Math.cos(angle) * distance;
-                const targetY = y + Math.sin(angle) * distance;
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 60 + 10; 
+        const targetX = x + Math.cos(angle) * distance;
+        const targetY = y + Math.sin(angle) * distance;
 
-                // 粒の初期位置を設定
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
 
-                setTimeout(() => {
-                    particle.style.transform = `translate(${targetX - x}px, ${targetY - y}px)`;
-                    particle.style.opacity = "0";
-                }, 10);
+        setTimeout(() => {
+          particle.style.transform = `translate(${targetX - x}px, ${targetY - y}px)`;
+          particle.style.opacity = "0";
+        }, 10);
 
-                // 600ms後に削除
-                setTimeout(() => {
-                    particle.remove();
-                }, 600);
-            }
-        }
-    </script>
+        setTimeout(() => {
+          particle.remove();
+        }, 600);
+      }
+    }
+
+    /***********************************************
+     * タッセル(振り子) + リボン(根元) + 常時ゆらゆら
+     ***********************************************/
+    // タッセル
+    let ropeLength1 = 400;
+    let ropeLength2 = 420;
+
+    let angle1 = Math.PI / -2;
+    let angle2 = Math.PI / -1.5;
+    let angularVelocity1 = 0;
+    let angularVelocity2 = 0;
+    // ここで gravity は小さめ
+    const gravity = 0.005;
+    const damping = 0.97;
+
+    // スクロール影響
+    let scrollInfluence = 0;
+
+    // 衝突閾値
+    const collisionThreshold = 50;
+
+    // ノイズ用
+    let noiseAmplitude = 0.0015; // 常時揺れの強さ
+    let noisePhase1 = 0;       // タッセル1のノイズ位相
+    let noisePhase2 = 100;     // タッセル2のノイズ位相(ずらす)
+
+    // アンカー
+    let tasselAnchorX = 0;
+    let tasselAnchorY = 0;
+
+    // DOM取得
+    const ropePath1 = document.getElementById("ropePath1");
+    const ropePath2 = document.getElementById("ropePath2");
+    const weight1   = document.getElementById("weight1");
+    const weight2   = document.getElementById("weight2");
+
+    // リボン角度
+    let ribbonAngleL = 0;
+    let ribbonAngleR = 0;
+
+    const ribbonL   = document.getElementById("ribbonL");
+    const ribbonR   = document.getElementById("ribbonR");
+
+    function updateAnchorPosition() {
+      tasselAnchorX = window.innerWidth * 0.8;
+      tasselAnchorY = window.innerHeight * 0.13;
+    }
+
+    function updateTasselsAndRibbons() {
+      // (1) タッセル角度を物理計算
+      angularVelocity1 += -gravity * Math.sin(angle1) + scrollInfluence;
+      angularVelocity2 += -gravity * Math.sin(angle2) + scrollInfluence;
+      angularVelocity1 *= damping;
+      angularVelocity2 *= damping;
+      angle1 += angularVelocity1;
+      angle2 += angularVelocity2;
+      scrollInfluence *= 0.9;
+
+      // (2) 「常時ゆらゆら」用に小さなノイズを加える
+      noisePhase1 += 0.04; // ノイズ位相を進める(数値は好み)
+      noisePhase2 += 0.06; // 2つ目は別位相
+      // angle1, angle2 に微量の揺れを加える
+      angle1 += Math.sin(noisePhase1) * noiseAmplitude;
+      angle2 += Math.sin(noisePhase2) * noiseAmplitude;
+
+      // (3) タッセル先端座標
+      const weightX1 = tasselAnchorX + ropeLength1 * Math.sin(angle1);
+      const weightY1 = tasselAnchorY + ropeLength1 * Math.cos(angle1);
+      const weightX2 = tasselAnchorX + ropeLength2 * Math.sin(angle2);
+      const weightY2 = tasselAnchorY + ropeLength2 * Math.cos(angle2);
+
+      weight1.style.transform = `translate(${weightX1}px, ${weightY1}px)`;
+      weight2.style.transform = `translate(${weightX2}px, ${weightY2}px)`;
+
+      // (4) ロープ(パス)
+      const controlX1 = (tasselAnchorX + weightX1) / 2;
+      const controlY1 = (tasselAnchorY + weightY1) / 2 + 60;
+      const controlX2 = (tasselAnchorX + weightX2) / 2;
+      const controlY2 = (tasselAnchorY + weightY2) / 2 + 60;
+
+      ropePath1.setAttribute(
+        "d",
+        `M ${tasselAnchorX - 3},${tasselAnchorY}
+         Q ${controlX1},${controlY1}
+           ${weightX1},${weightY1}`
+      );
+      ropePath2.setAttribute(
+        "d",
+        `M ${tasselAnchorX + 3},${tasselAnchorY}
+         Q ${controlX2},${controlY2}
+           ${weightX2},${weightY2}`
+      );
+
+      // (5) タッセル同士衝突
+      const distTassel = Math.hypot(weightX2 - weightX1, weightY2 - weightY1);
+      if (distTassel < collisionThreshold) {
+        const collisionForce = (collisionThreshold - distTassel) * 0.0002;
+        angularVelocity1 -= collisionForce;
+        angularVelocity2 += collisionForce;
+      }
+
+      // (6) リボン(ディレイ追従)
+      let lerpFactor = 0.03; // 好みで
+      ribbonAngleL += (angle1 - ribbonAngleL) * lerpFactor;
+      ribbonAngleR += (angle2 - ribbonAngleR) * lerpFactor;
+
+      // (7) リボンを根元に配置
+      const degL = ribbonAngleL * (180 / Math.PI);
+      ribbonL.style.left = `${tasselAnchorX - 40}px`;
+      ribbonL.style.top  = `${tasselAnchorY}px`;
+      ribbonL.style.transform = `translate(-50%, 0) rotate(${degL}deg)`;
+
+      const degR = ribbonAngleR * (180 / Math.PI);
+      ribbonR.style.left = `${tasselAnchorX + 40}px`;
+      ribbonR.style.top  = `${tasselAnchorY}px`;
+      ribbonR.style.transform = `translate(-50%, 0) rotate(${degR}deg)`;
+
+      requestAnimationFrame(updateTasselsAndRibbons);
+    }
+
+    // 初期化
+    updateAnchorPosition();
+    updateTasselsAndRibbons();
+
+    // スクロール影響
+    let lastScrollY = window.scrollY;
+    window.addEventListener("scroll", () => {
+      const deltaY = window.scrollY - lastScrollY;
+      scrollInfluence = -deltaY * 0.0002;
+      lastScrollY = window.scrollY;
+    });
+
+    // リサイズ
+    window.addEventListener("resize", () => {
+      updateAnchorPosition();
+    });
+  </script>
 </body>
 </html>
